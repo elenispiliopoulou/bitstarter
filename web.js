@@ -8,6 +8,7 @@ app.get('/', function(request, response) {
           throw err;
        }
        response.send(data);
+       return;
     });
 });
 
