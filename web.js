@@ -6,9 +6,9 @@ var content;
 
 //fs.readFile('./index.html', function (err,data) {
 //  if (err) {
- //     throw err;
- //  }   content = data;
-  // return ;
+ //    throw err;
+//  }   content = data;
+//    return content;
 //});
 
 //console.log(content);
@@ -18,11 +18,8 @@ app.get('/', function(request, response) {
        if (err) {
           throw err;
        }
-        content = data;
-        console.log(content);
-       response.send(content);
+       response.send(data);
     });
-       response.send(content);
 });
 
 var port = process.env.PORT || 5000;
