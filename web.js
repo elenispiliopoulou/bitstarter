@@ -2,10 +2,8 @@ var express = require('express'),
   fs = require('fs');
 var app = express.createServer(express.logger());
 
-var content;
-
 app.get('/', function(request, response) {
-    s.readFile('./index.html', function (err,data) {
+    fs.readFile('./index.html', function (err,data) {
        if (err) {
           throw err;
        }
