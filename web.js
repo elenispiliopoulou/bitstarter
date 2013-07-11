@@ -1,6 +1,7 @@
 var express = require('express'),
   fs = require('fs');
 var app = express.createServer(express.logger());
+
 var content;
 
 fs.readFile('index.html', function (err,data) {
@@ -9,7 +10,7 @@ fs.readFile('index.html', function (err,data) {
    }
    content = data;
 });
-
+console.log(content);
 app.get('/', function(request, response) {
 //  response.send('Hello World!');
   response.send(content);
