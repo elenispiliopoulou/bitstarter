@@ -7,9 +7,9 @@ app.get('/', function(request, response) {
        if (err) {
           throw err;
        }
-       response.writeHead(200, {"Content-Type": "text/plain"});
+//       response.writeHead(200, {"Content-Type": "text/plain"});
        response.write(data);
-       response.end();
+ //      response.end();
   //     response.send(data);
        return;
     });
