@@ -7,7 +7,10 @@ app.get('/', function(request, response) {
        if (err) {
           throw err;
        }
-       response.send(data);
+       response.writeHead(200, {"Content-Type": "text/plain"});
+       response.write(data);
+       response.end();
+  //     response.send(data);
        return;
     });
 });
