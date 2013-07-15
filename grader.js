@@ -20,12 +20,14 @@ References:
    - https://developer.mozilla.org/en-US/docs/JSON
    - https://developer.mozilla.org/en-US/docs/JSON#JSON_in_Firefox_2
 */
-
+var sys = require('util');
 var fs = require('fs');
+var rest = require('restler');
 var program = require('commander');
 var cheerio = require('cheerio');
 var HTMLFILE_DEFAULT = "index.html";
 var CHECKSFILE_DEFAULT = "checks.json";
+var URL_DEFAULT = "http://arcane-plateau-6316.herokuapp.com";
 
 var assertFileExists = function(infile) {
     var instr = infile.toString();
@@ -66,10 +68,28 @@ if(require.main == module) {
     program
         .option('-c, --checks <check_file>', 'Path to checks.json', clone(assertFileExists), CHECKSFILE_DEFAULT)
         .option('-f, --file <html_file>', 'Path to index.html', clone(assertFileExists), HTMLFILE_DEFAULT)
+        .option('-u, --url  <url_file>', 'Path to url', URL_DEFAULT)
         .parse(process.argv);
-    var checkJson = checkHtmlFile(program.file, program.checks);
-    var outJson = JSON.stringify(checkJson, null, 4);
-    console.log(outJson);
+    var checkJson;
+     var outJson;
+    if (program.file) {
+       checkJson = checkHtmlFile(program.file, program.checks);
+       outJson = JSON.stringify(checkJson, null, 4);
+       console.log(outJson);
+    }
+     else if (program.url) {
+     console.log('here');
+          rest.get(program.url).on('complete', function(result) {
+          if (result instanceof Error) {
+               sys.puts('Error: ' + result.message);
+               this.retry(5000); // try again after 5 sec
+           } else {
+              checkJson = result;
+              outJson = JSON.stringify(checkJson, null, 4);
+              console.log(outJson);
+           }
+       });     
+    }
 } else {
     exports.checkHtmlFile = checkHtmlFile;
 }
